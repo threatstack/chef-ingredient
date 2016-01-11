@@ -7,13 +7,8 @@
 # tests to work correctly.
 #
 
-env 'ARTIFACTORY_USERNAME' do
-  value 'username@chef.io'
-end
-
-env 'ARTIFACTORY_PASSWORD' do
-  value 'XXXXXXXXXXXXX'
-end
+ENV["ARTIFACTORY_USERNAME"] = 'username@chef.io'
+ENV["ARTIFACTORY_PASSWORD"] = 'XXXXXXXXXXXXX!'
 
 chef_ingredient 'chef' do
   action :upgrade
