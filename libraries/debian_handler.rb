@@ -109,7 +109,7 @@ module ChefIngredient
       installer = Mixlib::Install.new(installer_options)
 
       cache_path = Chef::Config[:file_cache_path]
-      remote_artifact_path = installer.artifact_info.first.url
+      remote_artifact_path = installer.artifact_info.url
       local_artifact_path = File.join(cache_path, ::File.basename(remote_artifact_path))
 
       remote_file local_artifact_path do

@@ -9,7 +9,8 @@ end
 
 group :unit do
   gem 'mixlib-versioning'
-  gem 'mixlib-install', '~> 0.8.0.alpha'
+  # gem 'mixlib-install', '~> 0.8.0.alpha'
+  gem 'mixlib-install', path: '/Users/patrickwright/github/mixlib-install'
   gem 'chef-sugar'
   gem 'chefspec'
   gem 'chef-dk'

@@ -4,6 +4,8 @@ driver:
   customize:
     memory: 2048
     cpus: 2
+  synced_folders:
+    - ["/Users/patrickwright/github/mixlib-install/pkg", "/pkg"]
 
 provisioner:
   # TODO: (engineering-services) Switch this back to policyfile_zero
@@ -47,6 +49,10 @@ suites:
   - name: chef_unstable
     run_list:
       - recipe[test::unstable]
+    attributes:
+      artifactory:
+        username: <%= ENV['ARTIFACTORY_USERNAME'] %>
+        password: <%= ENV['ARTIFACTORY_PASSWORD'] %>
   <% end %>
 
   - name: push_client

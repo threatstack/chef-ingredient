@@ -7,10 +7,16 @@
 # tests to work correctly.
 #
 
-ENV["ARTIFACTORY_USERNAME"] = 'username@chef.io'
-ENV["ARTIFACTORY_PASSWORD"] = 'XXXXXXXXXXXXX!'
+ENV["ARTIFACTORY_USERNAME"] = node['artifactory']['username']
+ENV["ARTIFACTORY_PASSWORD"] = node['artifactory']['password']
 
-chef_ingredient 'chef' do
+chef_ingredient 'chefdk' do
+  action :install
+  channel :stable
+  version :latest
+end
+
+chef_ingredient 'chefdk' do
   action :upgrade
   channel :unstable
   version :latest
