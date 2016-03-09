@@ -7,8 +7,8 @@
 # tests to work correctly.
 #
 
-ENV["ARTIFACTORY_USERNAME"] = node['artifactory']['username']
-ENV["ARTIFACTORY_PASSWORD"] = node['artifactory']['password']
+ENV['ARTIFACTORY_USERNAME'] = node['artifactory']['username']
+ENV['ARTIFACTORY_PASSWORD'] = node['artifactory']['password']
 
 chef_ingredient 'chefdk' do
   action :install

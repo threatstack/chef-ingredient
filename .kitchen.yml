@@ -46,7 +46,7 @@ suites:
 
   # This test requires access to Chef's internal network
   <% if ENV['ARTIFACTORY_USERNAME'] %>
-  - name: chef_unstable
+  - name: unstable
     run_list:
       - recipe[test::unstable]
     attributes:

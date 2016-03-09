@@ -27,8 +27,8 @@ module ChefIngredient
         else
           Chef::Log.debug("Found version #{current_version}, skipping installing :latest.")
         end
-      else
-        configure_version(installer) if new_resource.version != current_version
+      elsif new_resource.version != current_version
+        configure_version(installer)
       end
     end
 
@@ -37,7 +37,7 @@ module ChefIngredient
     end
 
     def handle_uninstall
-      fail 'Uninstalling a product is currently not supported.'
+      raise 'Uninstalling a product is currently not supported.'
     end
 
     def configure_version(installer)
