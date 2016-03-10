@@ -80,11 +80,12 @@ module ChefIngredientCookbook
     #
     def ensure_mixlib_install_gem_installed!
       node.run_state[:mixlib_install_gem_installed] ||= begin # ~FC001
-        r = chef_gem 'mixlib-install' do
-          source '/pkg/mixlib-install-0.8.0.alpha.6.gem'
-        end
-        r.run_action(:install)
-        # install_gem_from_rubygems('mixlib-install', '0.8.0.alpha.3')
+        # TODO: Uncomment for local mixlib-install testing
+        # r = chef_gem 'mixlib-install' do
+        #   source '/pkg/mixlib-install-0.8.0.alpha.6.gem'
+        # end
+        # r.run_action(:install)
+        install_gem_from_rubygems('mixlib-install', '0.8.0.alpha.3')
 
         require 'mixlib/install'
         require 'mixlib/install/product'

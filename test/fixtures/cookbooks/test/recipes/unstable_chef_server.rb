@@ -10,14 +10,8 @@
 ENV['ARTIFACTORY_USERNAME'] = node['artifactory']['username']
 ENV['ARTIFACTORY_PASSWORD'] = node['artifactory']['password']
 
-chef_ingredient 'chefdk' do
+chef_ingredient 'chef-server' do
   action :install
-  channel :stable
-  version :latest
-end
-
-chef_ingredient 'chefdk' do
-  action :upgrade
   channel :unstable
   version :latest
 end

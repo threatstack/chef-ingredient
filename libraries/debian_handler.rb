@@ -105,8 +105,8 @@ module ChefIngredient
         product_name: new_resource.product_name,
         channel: new_resource.channel,
         product_version: new_resource.version
-      }.merge(Mixlib::Install.detect_platform)
-      installer = Mixlib::Install.new(installer_options)
+      }
+      installer = Mixlib::Install.new(installer_options).detect_platform
 
       cache_path = Chef::Config[:file_cache_path]
       remote_artifact_path = installer.artifact_info.url
