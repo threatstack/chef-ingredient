@@ -2,13 +2,13 @@ require 'spec_helper'
 
 describe 'test::repo' do
   [{ platform: 'ubuntu', version: '14.04' },
-   { platform: 'centos', version: '6.5' }].each do |platform|
+   { platform: 'centos', version: '6.7' }].each do |platform|
     context "non-platform specific resources on #{platform[:platform]}" do
       cached(:chef_run) do
         ChefSpec::SoloRunner.new(
           platform.merge(step_into: %w(chef_ingredient chef_server_ingredient ingredient_config))
         ) do |node|
-          node.set['chef_admin'] = 'admin@chef.io'
+          node.normal['chef_admin'] = 'admin@chef.io'
         end.converge(described_recipe)
       end
 
@@ -65,60 +65,60 @@ EOS
   end
 
   context 'install packages with yum on centos' do
-    cached(:centos_65) do
+    cached(:centos_67) do
       ChefSpec::SoloRunner.new(
         platform: 'centos',
-        version: '6.5',
+        version: '6.7',
         step_into: %w(chef_ingredient chef_server_ingredient)
       ) do |node|
-        node.set['chef-server-core']['version'] = nil
+        node.normal['chef-server-core']['version'] = nil
       end.converge(described_recipe)
     end
 
     it 'installs package[chef-server]' do
-      pkgres = centos_65.find_resource('package', 'chef-server')
+      pkgres = centos_67.find_resource('package', 'chef-server')
       expect(pkgres).to_not be_nil
       expect(pkgres).to be_a(Chef::Resource::Package)
-      expect(centos_65).to install_package('chef-server')
+      expect(centos_67).to install_package('chef-server')
     end
 
     it 'installs package[opscode-manage]' do
-      pkgres = centos_65.find_resource('package', 'manage')
+      pkgres = centos_67.find_resource('package', 'manage')
       expect(pkgres).to_not be_nil
       expect(pkgres).to be_a(Chef::Resource::Package)
-      expect(centos_65).to install_package('manage')
+      expect(centos_67).to install_package('manage')
     end
   end
 
   context ':latest is specified for the version as a symbol' do
-    cached(:centos_65) do
+    cached(:centos_67) do
       ChefSpec::SoloRunner.new(
         platform: 'centos',
-        version: '6.5',
+        version: '6.7',
         step_into: ['chef_ingredient']
       ) do |node|
-        node.set['test']['chef-server-core']['version'] = :latest
+        node.normal['test']['chef-server-core']['version'] = :latest
       end.converge(described_recipe)
     end
 
     it 'installs yum_package[chef-server]' do
-      expect(centos_65).to install_package('chef-server-core')
+      expect(centos_67).to install_package('chef-server-core')
     end
   end
 
   context 'latest is specified for the version as a string' do
-    cached(:centos_65) do
+    cached(:centos_67) do
       ChefSpec::SoloRunner.new(
         platform: 'centos',
-        version: '6.5',
+        version: '6.7',
         step_into: ['chef_ingredient']
       ) do |node|
-        node.set['test']['chef-server-core']['version'] = 'latest'
+        node.normal['test']['chef-server-core']['version'] = 'latest'
       end.converge(described_recipe)
     end
 
     it 'installs yum_package[chef-server]' do
-      expect(centos_65).to install_package('chef-server-core')
+      expect(centos_67).to install_package('chef-server-core')
     end
   end
 
@@ -129,7 +129,7 @@ EOS
         version: '14.04',
         step_into: %w(chef_ingredient chef_server_ingredient)
       ) do |node|
-        node.set['chef-server-core']['version'] = nil
+        node.normal['chef-server-core']['version'] = nil
       end.converge(described_recipe)
     end
 
@@ -155,7 +155,7 @@ EOS
         version: '14.04',
         step_into: ['chef_ingredient']
       ) do |node|
-        node.set['test']['chef-server-core']['version'] = :latest
+        node.normal['test']['chef-server-core']['version'] = :latest
       end.converge(described_recipe)
     end
 
@@ -171,7 +171,7 @@ EOS
         version: '14.04',
         step_into: ['chef_ingredient']
       ) do |node|
-        node.set['test']['chef-server-core']['version'] = 'latest'
+        node.normal['test']['chef-server-core']['version'] = 'latest'
       end.converge(described_recipe)
     end
 
@@ -187,7 +187,7 @@ EOS
         version: '14.04',
         step_into: ['chef_ingredient']
       ) do |node|
-        node.set['test']['chef-server-core']['version'] = 'latest'
+        node.normal['test']['chef-server-core']['version'] = 'latest'
       end.converge(described_recipe)
     end
 
