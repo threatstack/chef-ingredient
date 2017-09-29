@@ -21,7 +21,7 @@ include ChefIngredientCookbook::Helpers
 provides :ingredient_config
 
 property :product_name, String, name_property: true
-property :sensitive, [TrueClass, FalseClass], default: false
+property :is_sensitive, [TrueClass, FalseClass], default: false
 property :config, [String, NilClass]
 
 action :render do
@@ -35,7 +35,7 @@ action :render do
 
   file target_config do
     action :create
-    sensitive new_resource.sensitive
+    sensitive new_resource.is_sensitive
     content get_config(product_name)
   end
 end
