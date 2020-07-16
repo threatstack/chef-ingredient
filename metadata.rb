@@ -1,13 +1,15 @@
 name 'chef-ingredient'
-version '0.21.2'
 maintainer 'Chef Software, Inc.'
 maintainer_email 'cookbooks@chef.io'
-license 'Apache 2.0'
+license 'Apache-2.0'
 description 'Primitives for managing Chef products and packages'
+version '3.1.3'
 
-depends 'compat_resource', '>= 12.16.3'
+%w(amazon centos redhat scientific oracle fedora debian ubuntu).each do |os|
+  supports os
+end
 
 source_url 'https://github.com/chef-cookbooks/chef-ingredient'
 issues_url 'https://github.com/chef-cookbooks/chef-ingredient/issues'
 
-chef_version '>= 12.1'
+chef_version '>= 13.0'

@@ -1,6 +1,6 @@
 #
 # Author:: Joshua Timberman <joshua@chef.io
-# Copyright (c) 2015-2016, Chef Software, Inc. <legal@chef.io>
+# Copyright:: 2015-2019, Chef Software, Inc. <legal@chef.io>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,9 +15,6 @@
 # limitations under the License.
 #
 
-require_relative '../libraries/helpers'
-include ChefIngredientCookbook::Helpers
-
 provides :omnibus_service
 
 default_action :nothing
@@ -31,24 +28,22 @@ property :service_name, String, regex: %r{[\w-]+\/[\w-]+}, name_property: true
   end
 end
 
-#
-# Returns the ctl-command to be used when executing commands for the
-# service.
-#
-def omnibus_ctl_command
-  ctl_command || ctl_command_for_product(product_key_for_service)
-end
+action_class do
+  include ChefIngredientCookbook::Helpers
 
-#
-# Returns the name of the product for which the service belongs to
-#
-def product_key_for_service
-  service_name.split('/').first
-end
+  #
+  # Returns the ctl-command to be used when executing commands for the
+  # service.
+  #
+  def omnibus_ctl_command
+    product_key_for_service = new_resource.service_name.split('/').first
+    new_resource.ctl_command || ctl_command_for_product(product_key_for_service)
+  end
 
-#
-# Returns the raw service name
-#
-def raw_service_name
-  service_name.split('/').last
+  #
+  # Returns the raw service name
+  #
+  def raw_service_name
+    new_resource.service_name.split('/').last
+  end
 end

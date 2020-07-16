@@ -1,6 +1,6 @@
 #
 # Author:: Joshua Timberman <joshua@chef.io
-# Copyright (c) 2015-2016, Chef Software, Inc. <legal@chef.io>
+# Copyright:: 2015-2019, Chef Software, Inc. <legal@chef.io>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,13 +15,9 @@
 # limitations under the License.
 #
 
-require_relative '../libraries/helpers'
-include ChefIngredientCookbook::Helpers
-
 provides :ingredient_config
 
 property :product_name, String, name_property: true
-property :is_sensitive, [TrueClass, FalseClass], default: false
 property :config, [String, NilClass]
 
 action :render do
@@ -34,12 +30,16 @@ action :render do
   end
 
   file target_config do
+    sensitive new_resource.sensitive if new_resource.sensitive
     action :create
-    sensitive new_resource.is_sensitive
     content get_config(new_resource.product_name)
   end
 end
 
 action :add do
   add_config(new_resource.product_name, new_resource.config)
+end
+
+action_class do
+  include ChefIngredientCookbook::Helpers
 end
